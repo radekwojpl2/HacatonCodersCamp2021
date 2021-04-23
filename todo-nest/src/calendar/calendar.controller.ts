@@ -8,11 +8,6 @@ export default class CalendarController {
         private readonly calendarService: CalendarService
     ) {}
 
-    @Get()
-    getHelloMessage() {
-    return this.calendarService.getHello();
-    }
-
     @Post()
     async addCalendarEvent(
         @Body('startDate') startDate: string,
@@ -28,5 +23,11 @@ export default class CalendarController {
         )
 
         return { id: newId }
+    }
+
+    @Get()
+    async getAllCalendarEvents() {
+        const allCalendarEvents = await this.calendarService.getCalendarEvents();
+        return allCalendarEvents;
     }
 }

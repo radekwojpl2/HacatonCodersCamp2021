@@ -16,7 +16,15 @@ export default class CalendarService {
       const newCalendarEventResult = await newCalendarEvent.save();
       return newCalendarEventResult.id as string;
   }
-    getHello() {
-        return "Hello calendar";
-    }
+
+  async getCalendarEvents() {
+      const calendarEvents = await this.calendarEvent.find().exec();
+      return calendarEvents.map(event => ({
+          id: event.id,
+          startDate: event.startDate,
+          endDate: event.endDate,
+          title: event.title,
+          type: event.type
+      })) as CalendarEvent[]
+  }
 }
