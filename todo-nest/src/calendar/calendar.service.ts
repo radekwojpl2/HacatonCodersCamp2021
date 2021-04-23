@@ -39,6 +39,20 @@ export default class CalendarService {
       }
   }
 
+  async updateCalendarEvent(calendarEventId: string, startDate: string, endDate: string, title: string, type: string) {
+      try {
+          const updatedCalendarEvent = await this.findCalendarEvent(calendarEventId);
+          if (startDate) updatedCalendarEvent.startDate = startDate;
+          if (endDate) updatedCalendarEvent.endDate = endDate;
+          if (title) updatedCalendarEvent.title = title;
+          if (type) updatedCalendarEvent.type = type;
+          updatedCalendarEvent.save();
+          return updatedCalendarEvent as CalendarEvent;
+      } catch(err) {
+          throw new NotFoundException('Could not find the calendar event');
+      }
+  }
+
   async deleteCalendarEvent(calendarEventId: string) {
       try {
           await this.calendarEvent.deleteOne({ _id: calendarEventId }).exec();

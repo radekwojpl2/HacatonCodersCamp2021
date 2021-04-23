@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiBody, ApiProperty } from '@nestjs/swagger';
 import CalendarService from './calendar.service';
 
@@ -58,6 +58,40 @@ export default class CalendarController {
         )
 
         return { id: newId }
+    }
+
+    @Patch(':id')
+    @ApiBody({
+        schema: {
+          type: 'object',
+          properties: {
+            startDate : {
+                type: 'string',
+                example: '2020-04-04'
+            },
+            endDate : {
+                type: 'string',
+                example: '2020-04-05'
+            },
+            title : {
+                type: 'string',
+                example: 'some title'
+            },
+            type : {
+                type: 'string',
+                example: 'normal'
+            }
+          },
+        },
+      })
+    updateCalendarEvent(
+        @Param('id') calendarEventId: string,
+        @Body('startDate') startDate: string,
+        @Body('endDate') endDate: string,
+        @Body('title') title: string,
+        @Body('type') type: string ,
+    ) {
+        return this.calendarService.updateCalendarEvent(calendarEventId, startDate, endDate, title, type);
     }
 
     @Delete(':id')
