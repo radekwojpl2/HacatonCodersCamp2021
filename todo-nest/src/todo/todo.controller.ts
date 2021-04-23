@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiBody } from '@nestjs/swagger';
 import TodoService from './todo.service';
 
@@ -52,5 +52,10 @@ export default class TodoController {
         )
 
         return { id: newId }
+    }
+
+    @Delete(':id')
+    deleteTodo(@Param('id') todoId: string) {
+        return this.todoService.deleteTodo(todoId);
     }
 }

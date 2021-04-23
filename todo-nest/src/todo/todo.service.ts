@@ -37,6 +37,16 @@ export default class TodoService {
         return newTodoResult.id as string;
     }
 
+    async deleteTodo(todoId: string) {
+        try {
+            await this.todoModel.deleteOne({ _id: todoId }).exec();
+            return { message: "Todo successfully deleted"}
+        } catch(err) {
+            throw new NotFoundException('Could not find the todo');
+        }
+    }
+  
+
     private async findTodo(id: string): Promise<Todo> {
         let todoToFound;
         try {
