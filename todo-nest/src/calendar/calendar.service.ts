@@ -39,6 +39,15 @@ export default class CalendarService {
       }
   }
 
+  async deleteCalendarEvent(calendarEventId: string) {
+      try {
+          await this.calendarEvent.deleteOne({ _id: calendarEventId }).exec();
+          return { message: "Calendar event successfully deleted"}
+      } catch(err) {
+          throw new NotFoundException('Could not find the calendar event');
+      }
+  }
+
   private async findCalendarEvent(id: string): Promise<CalendarEvent> {
       let calendarEventToFound;
       try {

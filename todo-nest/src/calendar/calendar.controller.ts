@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiBody, ApiProperty } from '@nestjs/swagger';
 import CalendarService from './calendar.service';
 
@@ -58,5 +58,10 @@ export default class CalendarController {
         )
 
         return { id: newId }
+    }
+
+    @Delete(':id')
+    deleteCalendarEvent(@Param('id') calendarEventId: string) {
+        return this.calendarService.deleteCalendarEvent(calendarEventId);
     }
 }
