@@ -14,6 +14,7 @@ import Menu from './components/Navigation/menu';
 import Announcements from './components/Announcements/Announcements';
 import MentorGroupManagement from './components/groupManagement/mentorGroupManagement';
 import './App.css'
+import Calendar from './components/Calendar/Calendar';
 
 function App() {
 
@@ -38,8 +39,11 @@ function App() {
                 <Tasks />
               </Route>
               <Route exact path="/announcements">
-            <Announcements/>
-          </Route>
+                <Announcements/>
+              </Route>
+              <Route exact path="/calendar">
+                <Calendar/>
+              </Route>
               <Route path="/groupMentor">
                 <MentorGroupManagement />
               </Route>
