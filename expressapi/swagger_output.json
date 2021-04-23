@@ -1,0 +1,1356 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "EduPlatform.API",
+    "description": "This is API for EduPlatform"
+  },
+  "host": "eduplatformapi.herokuapp.com",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Groups",
+      "description": "Endpoints"
+    },
+    {
+      "name": "Tasks",
+      "description": "Endpoints"
+    },
+    {
+      "name": "Projects",
+      "description": "Endpoints"
+    },
+    {
+      "name": "Announcements",
+      "description": "Endpoints"
+    },
+    {
+      "name": "Authorization",
+      "description": "Endpoints"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    },
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://petstore.swagger.io/oauth/authorize",
+      "flow": "implicit",
+      "scopes": {
+        "read_pets": "read your pets",
+        "write_pets": "modify pets in your account"
+      }
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/group/": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "description": "Endpoint to get all groups.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/allGroups"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/group/{groupId}": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "description": "Endpoint to get one group.",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/group"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Group not found"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "err": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/group/createGroup": {
+      "post": {
+        "tags": [
+          "Groups"
+        ],
+        "description": "Endpoint to create group.",
+        "parameters": [
+          {
+            "name": "newGroup",
+            "in": "body",
+            "description": "Create a new group",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/createGroup"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/group/addMember/{groupId}": {
+      "put": {
+        "tags": [
+          "Groups"
+        ],
+        "description": "Endpoint to add one member to the group.",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "_id",
+            "in": "body",
+            "description": "Id of user",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/addMember"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User added"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "User is in the group",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User is already in the group"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "err": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/group/deleteMember/{groupId}": {
+      "put": {
+        "tags": [
+          "Groups"
+        ],
+        "description": "Endpoint to delete one member from the group.",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "_id",
+            "in": "body",
+            "description": "Id of user",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/deleteMember"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User deleted"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User is not in the group"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "err": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/group/changeName/{groupId}": {
+      "put": {
+        "tags": [
+          "Groups"
+        ],
+        "description": "Endpoint to change the name of the group.",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "newName",
+            "in": "body",
+            "description": "New name of the group.",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/changeName"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "groupName changed"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "err": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/group/deleteGroup/{groupId}": {
+      "delete": {
+        "tags": [
+          "Groups"
+        ],
+        "description": "Endpoint to delete the group.",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id of the group"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Group deleted"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "err": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "group": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "linkToDemo": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "linkToGitHub": {
+                  "type": "string",
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/projects/{projectId}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Projects"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "group": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "linkToDemo": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "linkToGitHub": {
+                  "type": "string",
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Projects"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/tasks/": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "projectId": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "userId": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "deadline": {
+                  "type": "string",
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/tasks/{id}": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Tasks"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "deadline": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "done": {
+                  "type": "string",
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tasks"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/tasks/project/{id}": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/tasks/user/{id}": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/tasks/project/{projectId}/user/{userId}": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/authorization/": {
+      "get": {
+        "tags": [
+          "Authorization"
+        ],
+        "description": "Provides whole data from userschema collection. Outputs it as a array in the body.",        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/authorization/login": {
+      "post": {
+        "tags": [
+          "Authorization"
+        ],
+        "description": "Enable created user to login into the page. Returning JWT token.",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/authorization/register": {
+      "post": {
+        "tags": [
+          "Authorization"
+        ],
+        "description": "Enable to create accounts in our application.",
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description":"Bad Request"
+          }
+        }
+      }
+    },
+    "/announcements/": {
+      "get": {
+        "tags": [
+          "Announcements"
+        ],
+        "description": "Endpoint to get all announcements.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/allAnnouncements"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Announcements"
+        ],
+        "description": "Endpoint to create an announcement.",
+        "parameters": [
+          {
+            "name": "newAnnouncement",
+            "in": "body",
+            "description": "Create a new announcement",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/announcement"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/announcementWithId"
+            }
+          }
+        }
+      }
+    },
+    "/announcements/{id}": {
+      "get": {
+        "tags": [
+          "Announcements"
+        ],
+        "description": "Endpoint to get an announcement by Id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id of the announcement"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/announcementWithId"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Announcement with given Id does not exist"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Announcements"
+        ],
+        "description": "Endpoint to update an announcement.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "update of data",
+            "in": "body",
+            "description": "One parameter or more can be changed",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/updateAnnouncement"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Announcement with given Id does not exist"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Announcements"
+        ],
+        "description": "Endpoint to delete an announcement.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id of the announcement"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Given id is not valid"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "There is no announcement with given id"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "group": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "604a7d278316be1be42ecab0"
+        },
+        "groupName": {
+          "type": "string",
+          "example": "sample group name"
+        },
+        "mentor": {
+          "type": "string",
+          "example": "604a7b12d610101287aa2955"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "604a7ba6d610101287aa2957"
+              }
+            }
+          }
+        }
+      }
+    },
+    "allGroups": {
+      "type": "object",
+      "properties": {
+        "numberOfGroups": {
+          "type": "number",
+          "example": 1
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "604a7d278316be1be42ecab0"
+              },
+              "groupName": {
+                "type": "string",
+                "example": "sample group name"
+              },
+              "mentor": {
+                "type": "string",
+                "example": "604a7b12d610101287aa2955"
+              },
+              "members": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "604a7ba6d610101287aa2957"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "createGroup": {
+      "type": "object",
+      "properties": {
+        "mentor": {
+          "type": "string",
+          "example": "604a7b12d610101287aa2955"
+        },
+        "groupName": {
+          "type": "string",
+          "example": "sample group name"
+        }
+      },
+      "required": [
+        "mentor",
+        "groupName"
+      ]
+    },
+    "addMember": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "604a7ba6d610101287aa2957"
+        }
+      },
+      "required": [
+        "_id"
+      ]
+    },
+    "deleteMember": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "604a7ba6d610101287aa2957"
+        }
+      },
+      "required": [
+        "_id"
+      ]
+    },
+    "changeName": {
+      "type": "object",
+      "properties": {
+        "newName": {
+          "type": "string",
+          "example": "new group name"
+        }
+      },
+      "required": [
+        "newName"
+      ]
+    },
+    "allAnnouncements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "604fd0eb98161c531cc51c04"
+          },
+          "title": {
+            "type": "string",
+            "example": "Title2"
+          },
+          "type": {
+            "type": "string",
+            "example": "type"
+          },
+          "content": {
+            "type": "string",
+            "example": "Becon Ipsummmm..."
+          }
+        }
+      }
+    },
+    "announcementWithId": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "604fd0eb98161c531cc51c04"
+        },
+        "title": {
+          "type": "string",
+          "example": "sample announcement name"
+        },
+        "content": {
+          "type": "string",
+          "example": "sample announcement content"
+        },
+        "type": {
+          "type": "string",
+          "example": "sample type"
+        }
+      }
+    },
+    "announcement": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "sample announcement name"
+        },
+        "content": {
+          "type": "string",
+          "example": "sample announcement content"
+        },
+        "type": {
+          "type": "string",
+          "example": "sample type"
+        }
+      }
+    },
+    "updateAnnouncement": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "new announcement name"
+        }
+      }
+    }
+  }
+}
