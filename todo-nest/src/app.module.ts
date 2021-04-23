@@ -8,7 +8,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     TodoModule,
     CalendarModule,
     MongooseModule.forRoot(
-      `mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PASSWORD}@eduplatform.woboc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+      `mongodb+srv://admin:SD7rQLRL5xwGgyS@eduplatform.woboc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
     ),
   ],
   controllers: [],
