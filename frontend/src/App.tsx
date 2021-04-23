@@ -4,15 +4,17 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import ChangeForm from "./components/Authorization/ChangeForm"
-import {Provider} from 'react-redux';
-import store from './app/store';
-import ProjectCard from './components/ProjectsPage/ProjectCard';
-import ProjectsPage from './components/ProjectsPage/ProjectsPage';
-import Tasks from './components/Tasks/tasks';
-import Menu from './components/Navigation/menu';
-import Announcements from './components/Announcements/Announcements';
-import MentorGroupManagement from './components/groupManagement/mentorGroupManagement';
+// import ChangeForm from "./components/Authorization/ChangeForm"
+// import {Provider} from 'react-redux';
+// import store from './app/store';
+// import ProjectCard from './components/ProjectsPage/ProjectCard';
+// import ProjectsPage from './components/ProjectsPage/ProjectsPage';
+// import Tasks from './components/Tasks/tasks';
+// import Menu from './components/Navigation/menu';
+// import Announcements from './components/Announcements/Announcements';
+// import MentorGroupManagement from './components/groupManagement/mentorGroupManagement';
+import {Todo} from './components/todo/todo'
+import {Note} from './components/note/note'
 import './App.css'
 
 function App() {
@@ -24,40 +26,44 @@ function App() {
   }, [])
 
   return (
-    <Provider store={store}>
-      <div className="App">
-        <Router>
-          <Menu />
-          {token ? (
-            <Switch>
-              <Route exact path="/projects">
-                <ProjectsPage />
-              </Route>
-              <Route path="/projects/:projectId">
-                <ProjectCard />
-                <Tasks />
-              </Route>
-              <Route exact path="/announcements">
-            <Announcements/>
-          </Route>
-              <Route path="/groupMentor">
-                <MentorGroupManagement />
-              </Route>
-              <Route path="/groupMentor">
-                <MentorGroupManagement />
-              </Route>
-            </Switch>
-          ) 
-          : ( <Switch>
-              <Route exact path="/">
-                <ChangeForm />
-              </Route> 
+     <>
+   <Todo/>
+   {/* <Note/> */}
+   </>
+   //  <Provider store={store}>
+   //    <div className="App">
+   //      <Router>
+   //        <Menu />
+   //        {token ? (
+   //          <Switch>
+   //            <Route exact path="/projects">
+   //              <ProjectsPage />
+   //            </Route>
+   //            <Route path="/projects/:projectId">
+   //              <ProjectCard />
+   //              <Tasks />
+   //            </Route>
+   //            <Route exact path="/announcements">
+   //          <Announcements/>
+   //        </Route>
+   //            <Route path="/groupMentor">
+   //              <MentorGroupManagement />
+   //            </Route>
+   //            <Route path="/groupMentor">
+   //              <MentorGroupManagement />
+   //            </Route>
+   //          </Switch>
+   //        ) 
+   //        : ( <Switch>
+   //            <Route exact path="/">
+   //              <ChangeForm />
+   //            </Route> 
               
-              </Switch>
-          )}
-        </Router>
-      </div>
-    </Provider>
+   //            </Switch>
+   //        )}
+   //      </Router>
+   //    </div>
+   //  </Provider>
   ); 
 }
 
