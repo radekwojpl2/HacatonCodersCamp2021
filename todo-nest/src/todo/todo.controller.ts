@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiBody } from '@nestjs/swagger';
 import TodoService from './todo.service';
 
@@ -52,6 +52,35 @@ export default class TodoController {
         )
 
         return { id: newId }
+    }
+
+    @Patch(':id')
+    @ApiBody({
+        schema: {
+          type: 'object',
+          properties: {
+            date : {
+                type: 'string',
+                example: '2020-04-04'
+            },
+            checked : {
+                type: 'boolean',
+                example: false
+            },
+            value : {
+                type: 'string',
+                example: 'some description of the task'
+            },
+          },
+        },
+      })
+    updateTodo(
+        @Param('id') todoId: string,
+        @Body('date') date: string,
+        @Body('checked') checked: boolean,
+        @Body('value') value: string,
+    ) {
+        return this.todoService.updateTodo(todoId, date, checked, value);
     }
 
     @Delete(':id')

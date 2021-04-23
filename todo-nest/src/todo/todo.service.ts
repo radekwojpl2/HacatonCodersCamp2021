@@ -37,6 +37,19 @@ export default class TodoService {
         return newTodoResult.id as string;
     }
 
+    async updateTodo(todoId: string, date: string, checked: boolean, value: string) {
+        try {
+            const updatedTodo = await this.findTodo(todoId);
+            if (date) updatedTodo.date = date;
+            if (checked) updatedTodo.checked = checked;
+            if (value) updatedTodo.value = value;
+            updatedTodo.save();
+            return updatedTodo as Todo;
+        } catch(err) {
+            throw new NotFoundException('Could not find the todo');
+        }
+    }
+
     async deleteTodo(todoId: string) {
         try {
             await this.todoModel.deleteOne({ _id: todoId }).exec();
@@ -45,7 +58,6 @@ export default class TodoService {
             throw new NotFoundException('Could not find the todo');
         }
     }
-  
 
     private async findTodo(id: string): Promise<Todo> {
         let todoToFound;
