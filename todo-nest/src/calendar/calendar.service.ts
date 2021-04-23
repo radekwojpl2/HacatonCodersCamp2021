@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import CalendarEvent from './calendarEvent.model'
@@ -26,5 +26,29 @@ export default class CalendarService {
           title: event.title,
           type: event.type
       })) as CalendarEvent[]
+  }
+
+  async getSingleCalendarEvent(calendarEventId: string) {
+      const singleCalendarEvent = await this.findCalendarEvent(calendarEventId)
+      return {
+          id: singleCalendarEvent.id,
+          startDate: singleCalendarEvent.startDate,
+          endDate: singleCalendarEvent.endDate,
+          title: singleCalendarEvent.title,
+          type: singleCalendarEvent.type
+      }
+  }
+
+  private async findCalendarEvent(id: string): Promise<CalendarEvent> {
+      let calendarEventToFound;
+      try {
+          calendarEventToFound = await this.calendarEvent.findById(id);
+      } catch(err) {
+          throw new NotFoundException('Could not find the calendarEvent');
+      }
+      if(!calendarEventToFound) {
+        throw new NotFoundException('Could not find the calendarEvent');
+      }
+      return calendarEventToFound;
   }
 }
