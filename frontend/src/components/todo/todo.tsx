@@ -1,75 +1,70 @@
 import React, {useState} from "react";
 import {makeStyles, Dialog, ListItem, TextField, IconButton, Button} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import Task from './task'
+import Task from "./task";
 
-const useStyles=makeStyles({
-   container:{
-      padding: '10px'
+const useStyles = makeStyles({
+   container: {
+      padding: "10px",
    },
-   input:{
-      width: 'auto'
+   input: {
+      width: "auto",
    },
-   btnContainer:{
-      display: 'flex',
-      justifyContent: 'space-evenly',
-      margin: '10px 0'
+   btnContainer: {
+      display: "flex",
+      justifyContent: "space-evenly",
+      margin: "10px 0",
    },
-   newTaskContainer:{
-      marginLeft: '30px',
-      width: 'auto'
-   }
-})
+   newTaskContainer: {
+      marginLeft: "30px",
+      width: "auto",
+   },
+});
 
 export const Todo = () => {
-   const classes=useStyles()
+   const classes = useStyles();
    const [tasks, setTasks] = useState<any>([]);
    const [taskText, setTaskText] = useState("");
 
    const handleKeyDown = (event: any) => {
-      if (event.key === 'Enter')
-        handleAddTask()
-      
-    }
-
-   const handleAddTask = () => {
-      let date=new Date()
-
-      setTasks((prev: any)=>[...prev, {
-         date: date,
-         checked: false,
-         value: taskText
-      }])
-
-      setTaskText('')
+      if (event.key === "Enter") handleAddTask();
    };
 
-   const handleClose=()=>{
+   const handleAddTask = () => {
+      let date = new Date();
 
-   }
+      setTasks((prev: any) => [
+         ...prev,
+         {
+            date: date,
+            checked: false,
+            value: taskText,
+         },
+      ]);
 
-   const handleSave=()=>{
-      // save to backend
+      setTaskText("");
+   };
+
+   const handleClose = () => {
+      // close function from props to close Dialog
+   };
+
+   const handleSave = () => {
+      // save to backend //heroku
       console.log(tasks);
-      
-      handleClose()
-   }
+
+      handleClose();
+   };
 
    const updateTask = (_task: any) => {
       const newTasks = tasks.map((task: any) => {
-         if(task.date === _task.date)
-            return _task;
+         if (task.date === _task.date) return _task;
 
          return task;
       });
 
       setTasks(newTasks);
-      console.log(tasks);
    };
-   
-   console.log(tasks);
-   
-
 
    return (
       <div>

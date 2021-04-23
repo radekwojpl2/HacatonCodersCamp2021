@@ -1,51 +1,49 @@
 import React, {useState} from "react";
-import {makeStyles, Dialog, ListItem, TextField, IconButton, Button} from "@material-ui/core";
+import {makeStyles, Dialog, TextField, Button} from "@material-ui/core";
 
-const useStyles=makeStyles({
-   container:{
-      margin: '10px'
+const useStyles = makeStyles({
+   container: {
+      margin: "10px",
    },
-   btnContainer:{
-      display: 'flex',
-      justifyContent: 'space-evenly',
-      margin: '10px 0'
+   btnContainer: {
+      display: "flex",
+      justifyContent: "space-evenly",
+      margin: "10px 0",
    },
    textField: {
-      margin: '10px',
-      minWidth: '280px'
-   }
-})
+      margin: "10px",
+      minWidth: "280px",
+   },
+});
 
 export const Note = () => {
-   const classes=useStyles()
-   const [title, setTitle]=useState('')
-   const [text, setText]=useState('')
+   const classes = useStyles();
+   const [title, setTitle] = useState("");
+   const [text, setText] = useState("");
 
+   const handleClose = () => {
+      // close function from props to close Dialog
+   };
 
-   const handleClose=()=>{
+   const handleTitle = (e: any) => {
+      setTitle(e.target.value);
+   };
 
-   }
+   const handleText = (e: any) => {
+      setText(e.target.value);
+   };
 
-   const handleTitle=(e: any)=>{
-      setTitle(e.target.value)
-   }
+   const handleSave = () => {
+      //save to backend
 
-   const handleText=(e: any)=>{
-      setText(e.target.value)
-   }
-
-   const handleSave=()=>{
-      
-      handleClose()
-   }
-   
-
+      handleClose();
+   };
 
    return (
       <div>
          <Dialog open={true} className={classes.container}>
             <TextField
-               label='title'
+               label="title"
                value={title}
                className={classes.textField}
                onChange={handleTitle}
