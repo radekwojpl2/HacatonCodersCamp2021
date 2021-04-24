@@ -65,4 +65,43 @@ export default class ActionsController {
 
         return { id: newId }
     }
+
+    @Patch(':id')
+    @ApiBody({
+        schema: {
+          type: 'object',
+          properties: {
+            title : {
+                type: 'string',
+                example: 'some action title'
+            },
+            desc : {
+                type: 'string',
+                example: 'some action description'
+            },
+            date : {
+                type: 'number',
+                example: 1619222686944
+            },
+            personToNotify: {
+                type: "string",
+                example: "fsd@gads.com"
+            }
+          },
+        },
+      })
+    UpdateAction(
+        @Param('id') actionId: string,
+        @Body('title') title: string,
+        @Body('desc') desc: string,
+        @Body('date') date: number,
+        @Body('personToNotify') personToNotify: string,
+    ) {
+        return this.actionsService.updateAction(actionId, title, desc, date, personToNotify);
+    }
+
+    @Delete(':id')
+    deleteAction(@Param('id') actionId: string) {
+        return this.actionsService.deleteAction(actionId);
+    }
 }

@@ -29,7 +29,7 @@ export interface Action extends mongoose.Document {
   userId: string;
   title: string;
   desc: string;
-  date: string;
+  date: number;
   personToNotify: string;
 }
 
