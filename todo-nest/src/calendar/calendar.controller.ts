@@ -43,11 +43,11 @@ export default class CalendarController {
             },
             rRule: {
                 type: 'string',
-                example: 'nie wiem możesz mi przesłać Kinga jak chcesz xD'
+                example: ''
             },
             notes: {
                 type: 'string',
-                example: 'some example note'
+                example: ''
             }
           },
         },
