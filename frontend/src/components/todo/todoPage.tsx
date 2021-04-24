@@ -39,7 +39,7 @@ const TodoPage = () => {
 
     return(
         <div className={classes.container}>
-            <h2>To do</h2>
+            <h2>To do List</h2>
             <IconButton onClick={() => setIsAddingTodo(true)}>
                   <AddIcon />
             </IconButton>

@@ -26,21 +26,15 @@ export const Task=({taskValue, taskChecked, updateTask, taskDate, taskId}: {task
    }
 
    const handleValue=(e: any)=>{
+      const task: [string, {}] = [e.target.id, {value: e.target.value}]
       
-      updateTask && updateTask({
+      updateTask ? updateTask({
          value: e.target.value,
          checked: checked,
          date: taskDate
-      })
+      }) : dispatch(updateTodo(task))
 
       setValue(e.target.value)
-   }
-
-   const handleSubmit = (e: any) => {
-      if (e.key === "Enter") {
-         const task: [string, {}] = [e.target.id, {value: e.target.value}]
-         dispatch(updateTodo(task)).then(() => window.location.reload())
-      } 
    }
 
    return (
@@ -50,7 +44,6 @@ export const Task=({taskValue, taskChecked, updateTask, taskDate, taskId}: {task
             value={value}
             disabled={checked}
             onChange={handleValue}
-            onKeyDown={handleSubmit}
             id={taskId}/>
       </ListItem>
    );

@@ -40,9 +40,8 @@ export const addTodos = createAsyncThunk(
     'todos/addTodos',
     async (todos: ITodo[]) => {
         try {
-            const data = await todos.map( async(todo: ITodo) => {
+            const data = todos.map( async(todo: ITodo) => {
                 const el = await axios.post('https://hackathon-nest.herokuapp.com/todo', todo).then(res => res.data)
-                console.log(el)
                 return el
             })
             return data
@@ -56,9 +55,7 @@ export const updateTodo = createAsyncThunk(
     'todos/updateTodo',
     async (todo: [string, {}]) => {
         try {
-            console.log(todo)
             const updated = await axios.patch('https://hackathon-nest.herokuapp.com/todo/' + todo[0], todo[1]).then(res => res.data)
-            console.log(updated)
             return updated
         } catch (err) {
             return err.response.data
@@ -83,6 +80,9 @@ const ToDoPageSlice = createSlice({
             state.todos = action.payload
             state.loading = false;
             state.error = false
+        });
+        builder.addCase(addTodos.fulfilled, (state, action) => {
+            window.location.reload()
         });
       }
   })
