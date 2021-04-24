@@ -22,54 +22,40 @@ const resources = [{
   fieldName: 'type',
   title: 'Type',
   instances: [
-    { id: 'task', text: 'Task', color: '#ADB7FF' },
-    { id: 'sprint-planning', text: 'Sprint Planning', color: '#C3B7CC' },
-    { id: 'daily-scrum', text: 'Daily Scrum', color: '#EFD3D7' },
-    { id: 'sprint-review', text: 'Sprint Review', color: '#7C88A2' },
-    { id: 'sprint-retrospective', text: 'Sprint Retrospective', color: '#FCC5F1' },
-    { id: 'sprint', text: 'The Sprint', color: '#CFD3DD' },
+    { id: 'task', text: 'Task', color: '#c32f27' },
+    { id: 'sprint-planning', text: 'Sprint Planning', color: '#53B7C9' },
+    { id: 'daily-scrum', text: 'Daily Scrum', color: '#EC407A' },
+    { id: 'sprint-review', text: 'Sprint Review', color: '#7C3DDD' },
+    { id: 'sprint-retrospective', text: 'Sprint Retrospective', color: '#538d22' },
+    { id: 'sprint', text: 'The Sprint', color: '#ffd25a' },
   ],
 }];
-
-const app = [{
-  title: 'Website Re-Design Plan',
-  startDate: new Date(2021, 3, 20, 9, 15),
-  endDate: new Date(2021, 3, 20, 11, 30),
-  id: 100,
-  rRule: 'FREQ=DAILY;COUNT=3',
-  exDate: '20180628T063500Z,20180626T061500Z',
-}, {
-  title: 'Book Flights to San Fran for Sales Trip',
-  startDate: new Date(2021, 3, 25, 12, 11),
-  endDate: new Date(2021, 3, 25, 13, 0),
-  id: 101,
-  rRule: 'FREQ=DAILY;COUNT=4',
-  // exDate: '20180627T091100Z',
-  allDay: true,
-}]
 
 const CalendarView = () => {
   const dispatch = useAppDispatch()
   const [currentDate, setCurrentDate] = React.useState<SchedulerDateTime>(new Date());
   const events = useAppSelector(state => state.calendar.events)
 
-  const commitChanges = ({added, changed, deleted}: ChangeSet) => {
+  const commitChanges = async ({added, changed, deleted}: ChangeSet) => {
     if (added) {
       const data = {
-        title: added?.title,
+        title: added?.title ? added?.title  : "",
         startDate: added?.startDate,
         endDate: added?.endDate,
-        type: added?.type,
-        rRule: added?.rRule,
-        notes: added?.notes
+        type: added?.type ? added?.type : "",
+        rRule: added?.rRule ? added?.rRule : "",
+        notes: added?.notes ? added?.notes : ""
       }
-      console.log(data)
       dispatch(addEvent(data)).then(() => window.location.reload())
-    } else if (changed) {
+    } else if (changed && !changed[Object.keys(changed)[0]].hasOwnProperty('exDate') ) {
       dispatch(updateEvent(changed)).then(() => window.location.reload())
-
     } else if (deleted) {
       dispatch(deleteEvent(deleted)).then(() => window.location.reload())
+    } else if (changed && changed[Object.keys(changed)[0]].hasOwnProperty('exDate')) {
+      const id = Object.keys(changed)[0]
+      const data = {endDate: changed[id]}
+      dispatch(updateEvent(data)).then(() => window.location.reload())
+      dispatch(deleteEvent(id)).then(() => window.location.reload())
     }
   }
 

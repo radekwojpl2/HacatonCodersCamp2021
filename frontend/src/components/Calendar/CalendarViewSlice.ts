@@ -7,7 +7,7 @@ export interface ICalendarEvent {
     title: string;
     type: string;
     id?: string;
-    rRule: string | undefined,
+    rRule?: string | undefined,
     notes: string | undefined
 }
 
@@ -28,6 +28,7 @@ export const getAllEvents = createAsyncThunk(
     async () => {
         try {
             const calendarEvents= await axios.get('https://hackathon-nest.herokuapp.com/calendar').then(res => res.data)
+            console.log(calendarEvents)
             return calendarEvents
         } catch (err) {
             return err.response.data
