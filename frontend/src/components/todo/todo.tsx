@@ -21,7 +21,7 @@ const useStyles = makeStyles({
    },
 });
 
-export const Todo = () => {
+export const Todo = ({ setIsAddingTodo }: {setIsAddingTodo: Function}) => {
    const classes = useStyles();
    const [tasks, setTasks] = useState<any>([]);
    const [taskText, setTaskText] = useState("");
@@ -46,6 +46,7 @@ export const Todo = () => {
    };
 
    const handleClose = () => {
+      setIsAddingTodo(false)
       // close function from props to close Dialog
    };
 
