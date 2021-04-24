@@ -14,6 +14,7 @@ const AddActionForm = ({ saveAction, actionData, typee, userID }: { saveAction: 
   const [open, setOpen] = React.useState(false);
 
   const [form, setForm] = useState({
+    id: actionData?.id || '',
     title: actionData?.title || '',
     desc: actionData?.desc || '',
     personeToNotify: actionData?.personToNotify || '',
@@ -39,11 +40,12 @@ const AddActionForm = ({ saveAction, actionData, typee, userID }: { saveAction: 
     }   
 
   const submitValue = async (e: any) => {
-
-    await saveAction("604a7b12d610101287aa2955", form)
+    e.preventDefault();
+    await saveAction(userID, form)
 
     handleClose()
   }
+
   let button = null;
 
   if (typee == "ADD") {
@@ -62,7 +64,7 @@ const AddActionForm = ({ saveAction, actionData, typee, userID }: { saveAction: 
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <div className={classes.formContainer}>
           <h2 id="simple-modal-title"> Add employee new action</h2>
-          <form onSubmit={e => submitValue(e)} onChange={handleFormChange} className={"add-announcement-form"}>
+          <form onSubmit={e => submitValue(e)} onChange={handleFormChange} className={"add-announcement-form"}  >
             <TextField
               id="title"
               label="Title"
