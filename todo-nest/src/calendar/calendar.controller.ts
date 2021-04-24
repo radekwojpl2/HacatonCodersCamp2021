@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { ApiBody, ApiProperty } from '@nestjs/swagger';
+import { ApiBody } from '@nestjs/swagger';
 import CalendarService from './calendar.service';
 
 @Controller('calendar')
@@ -40,6 +40,14 @@ export default class CalendarController {
             type : {
                 type: 'string',
                 example: 'normal'
+            },
+            rRule: {
+                type: 'string',
+                example: ''
+            },
+            notes: {
+                type: 'string',
+                example: ''
             }
           },
         },
@@ -49,12 +57,16 @@ export default class CalendarController {
         @Body('endDate') endDate: string,
         @Body('title') title: string,
         @Body('type') type: string,
+        @Body('rRule') rRule: string,
+        @Body('notes') notes: string,
     ) {
         const newId = await this.calendarService.addCalendarEvent(
             startDate,
             endDate,
             title,
-            type
+            type,
+            rRule,
+            notes
         )
 
         return { id: newId }
@@ -80,6 +92,14 @@ export default class CalendarController {
             type : {
                 type: 'string',
                 example: 'normal'
+            },
+            rRule: {
+                type: 'string',
+                example: ''
+            },
+            notes: {
+                type: 'string',
+                example: ''
             }
           },
         },
@@ -90,8 +110,10 @@ export default class CalendarController {
         @Body('endDate') endDate: string,
         @Body('title') title: string,
         @Body('type') type: string ,
+        @Body('rRule') rRule: string,
+        @Body('notes') notes: string,
     ) {
-        return this.calendarService.updateCalendarEvent(calendarEventId, startDate, endDate, title, type);
+        return this.calendarService.updateCalendarEvent(calendarEventId, startDate, endDate, title, type, rRule, notes);
     }
 
     @Delete(':id')

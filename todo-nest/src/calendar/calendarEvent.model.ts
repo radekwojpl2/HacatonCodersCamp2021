@@ -18,6 +18,14 @@ export const CalendarSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  rRule: {
+    type: String,
+    default: ""
+  },
+  notes: {
+    type: String,
+    default: ""
+  }
 });
 
 export interface CalendarEvent extends mongoose.Document {
@@ -26,6 +34,8 @@ export interface CalendarEvent extends mongoose.Document {
   endDate: string;
   title: string;
   type: string;
+  rRule: string;
+  notes: string;
 }
 
 export default CalendarEvent;

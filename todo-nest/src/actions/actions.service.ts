@@ -4,6 +4,51 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import Action  from './action.model';
 
+import * as nodemailer from 'nodemailer';
+import { google } from 'googleapis';
+
+const CLIENT_ID = '975568697628-0dftutnarlhv79i4rgcd6ojhvgqfe85m.apps.googleusercontent.com';
+const CLEINT_SECRET = 'aMB-muybcmhof7TK3RSxb_u4';
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN = '1//04xh8rTocIhFgCgYIARAAGAQSNwF-L9IrN8TY6gd4UZfeDatfJKh7DUFLmJkvLeV79qAOv6QNqEE30YrSODqJley3C3HfCcmxZ8M';
+
+const oAuth2Client = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLEINT_SECRET,
+  REDIRECT_URI
+);
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+async function sendMail(receiverEmail: string) {
+    try {
+      const accessToken = await oAuth2Client.getAccessToken();
+  
+      const transport = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          type: 'OAuth2',
+          user: 'instakaidev@gmail.com',
+          clientId: CLIENT_ID,
+          clientSecret: CLEINT_SECRET,
+          refreshToken: REFRESH_TOKEN,
+          accessToken: accessToken,
+        },
+      });
+  
+      const mailOptions = {
+        from: 'CollaborationPlatform <yours authorised email address@gmail.com>',
+        to: receiverEmail,
+        subject: 'Help requested!',
+        html: `<h1>Hello, someone requested a help from you!</h1><p>Please check it out <a href="https://collaboration-platform-hackath.herokuapp.com/employees">here</a></p>`,
+      };
+  
+      const result = await transport.sendMail(mailOptions);
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+
 @Injectable()
 export default class ActionsService {
     constructor(
@@ -38,7 +83,10 @@ export default class ActionsService {
 
     async addAction(userId: string, title: string, desc: string, date: number, personToNotify: string) {
         const newAction = new this.actionModel({userId, title, desc, date, personToNotify})
-        const newActionResult = await newAction.save();
+        const newActionResult = await newAction.save();  
+        sendMail(newActionResult.personToNotify)
+        .then((result) => console.log('Email sent...', result))
+        .catch((error) => console.log(error.message));
         return newActionResult.id as string;
     }
 
