@@ -15,7 +15,7 @@ const authorizationRouter_1 = tslib_1.__importDefault(require("./routes/authoriz
 const announcementsRouter_1 = tslib_1.__importDefault(require("./routes/announcementsRouter"));
 const app = express_1.default();
 mongoose_1.default
-    .connect(`mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PASSWORD}@eduplatform.woboc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
+    .connect(`mongodb+srv://admin:SD7rQLRL5xwGgyS@eduplatform.woboc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
