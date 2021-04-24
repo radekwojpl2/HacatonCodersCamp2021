@@ -78,9 +78,14 @@ function EmployeeCard(props: { role: string, name: string, userId: string, actio
     const classes = useStyles({});
 
     const { role, name, actions, userId } = props;
-
+    //actions = [actions];
+    
+ 
     return (
+        <>
+        { name && role && actions && userId ?
         <Card className={classes.root}>
+            {console.log(actions)}
             <CardContent >
                 <Typography variant="h4" component="h2">
                     {role}
@@ -102,7 +107,8 @@ function EmployeeCard(props: { role: string, name: string, userId: string, actio
             <CardActions>
                 <AddActionForm saveAction={saveActrion} typee="ADD" userID={userId} ></AddActionForm>
             </CardActions>
-        </Card>
+        </Card> : "loading"}
+       </> 
 
     )
 }
@@ -163,18 +169,19 @@ export interface Test extends User {
 async function getUsers() {
     var users: User[] = await axios.get("https://eduplatformapi.herokuapp.com/authorization/").then(x => x.data)
     var actions: IActionResponse[] = await axios.get("https://hackathon-nest.herokuapp.com/actions").then(x => x.data)
-
-    var result: [{}] = [{}];
+    console.log(actions);
+    var result: any = [];
 
     users.forEach(user => {
         result.push({
             role: user.role,
             name: `${user.firstName} ${user.lastName}`,
             userID: user._id,
-            actions: actions.find(x => x.userId === user._id)
+            actions: actions.filter(x => x.userId === user._id)
         })
     });
-
+    console.log("=============================================================")
+    console.log("result", result)
     return result;
 }
 
@@ -196,7 +203,8 @@ function SupervisiorCard() {
         fetchData()
     }, [])
     const classes = useStyles({});
-
+    console.log("===========================================")
+    console.log("data", data)
     return (
          <div>
              {data ? <div className={classes.content}>
