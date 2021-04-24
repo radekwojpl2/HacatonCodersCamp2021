@@ -27,7 +27,7 @@ const resources = [{
     { id: 'daily-scrum', text: 'Daily Scrum', color: '#EC407A' },
     { id: 'sprint-review', text: 'Sprint Review', color: '#7C3DDD' },
     { id: 'sprint-retrospective', text: 'Sprint Retrospective', color: '#538d22' },
-    { id: 'sprint', text: 'The Sprint', color: '#ffd25a' },
+    { id: 'sprint', text: 'The Sprint', color: '#f7b504' },
   ],
 }];
 

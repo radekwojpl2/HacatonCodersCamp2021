@@ -12,7 +12,7 @@ import ProjectsPage from './components/ProjectsPage/ProjectsPage';
 import Tasks from './components/Tasks/tasks';
 import Menu from './components/Navigation/menu';
 import Announcements from './components/Announcements/Announcements';
-import MentorGroupManagement from './components/groupManagement/mentorGroupManagement';
+import TodoPage from './components/todo/todoPage'
 import './App.css'
 import Calendar from './components/Calendar/Calendar';
 
@@ -44,12 +44,9 @@ function App() {
               <Route exact path="/calendar">
                 <Calendar/>
               </Route>
-              <Route path="/groupMentor">
-                <MentorGroupManagement />
-              </Route>
-              <Route path="/groupMentor">
-                <MentorGroupManagement />
-              </Route>
+              <Route exact path="/">
+                <TodoPage />
+              </Route> 
             </Switch>
           ) 
           : ( <Switch>

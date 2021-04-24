@@ -33,9 +33,9 @@ const Navbar = ({auth, mobile}:NavbarInterface) => {
                         <ListItemText primary="Projects" />
                     </ListItem>
                 </NavLink>
-                <NavLink to='/groupMentor' className={mobile? classes.linkTextDrawer : classes.linkText}>
+                <NavLink to='/employees' className={mobile? classes.linkTextDrawer : classes.linkText}>
                     <ListItem button>
-                        <ListItemText primary="Groups" />
+                        <ListItemText primary="Team" />
                     </ListItem>
                 </NavLink>
                 <NavLink to='/' className={mobile? classes.linkTextDrawer : classes.linkText}>
