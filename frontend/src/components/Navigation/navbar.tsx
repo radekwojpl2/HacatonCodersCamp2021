@@ -23,6 +23,11 @@ const Navbar = ({auth, mobile}:NavbarInterface) => {
                         <ListItemText primary="Announcements" />
                     </ListItem>
                 </NavLink>
+                <NavLink to='/calendar' className={mobile? classes.linkTextDrawer : classes.linkText}>
+                    <ListItem button>
+                        <ListItemText primary="Calendar" />
+                    </ListItem>
+                </NavLink>
                 <NavLink to='/projects' exact className={mobile? classes.linkTextDrawer : classes.linkText}>
                     <ListItem button>
                         <ListItemText primary="Projects" />

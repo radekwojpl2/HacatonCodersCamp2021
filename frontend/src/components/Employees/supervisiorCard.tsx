@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
     content: {
         display: 'flex',
         flexDirection: 'row',
+        flexWrap: "wrap",
+        justifyContent: "space-around"
     },
     item: {
         textAlign: 'center'

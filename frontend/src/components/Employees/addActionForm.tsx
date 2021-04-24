@@ -74,14 +74,6 @@ const AddActionForm = ({ saveAction, actionData, typee, userID }: { saveAction: 
               required
               fullWidth />
             <TextField
-              id="type"
-              label="Type"
-              className={classes.formInput}
-              variant="filled"
-              defaultValue={actionData && actionData.type}
-              required
-              fullWidth />
-            <TextField
               id='desc'
               label="Description"
               className={classes.formInput}

@@ -25,7 +25,7 @@ const Menu  = () => {
                     <NavLink to='/' className={classes.linkText}>
                         <Button>
                             <Typography variant='h6' className={classes.linkText}>
-                                EduPlatform
+                                Collaboration Platform
                             </Typography>
                         </Button>
                     </NavLink>
