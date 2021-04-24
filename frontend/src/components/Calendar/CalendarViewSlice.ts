@@ -1,12 +1,14 @@
 import axios from 'axios'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-interface ICalendarEvent {
+export interface ICalendarEvent {
     startDate: Date;
     endDate: Date;
     title: string;
     type: string;
-    id?: string
+    id?: string;
+    rRule: string | undefined,
+    notes: string | undefined
 }
 
 interface ICalendarInitialState {

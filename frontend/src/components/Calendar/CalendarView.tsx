@@ -31,20 +31,39 @@ const resources = [{
   ],
 }];
 
+const app = [{
+  title: 'Website Re-Design Plan',
+  startDate: new Date(2021, 3, 20, 9, 15),
+  endDate: new Date(2021, 3, 20, 11, 30),
+  id: 100,
+  rRule: 'FREQ=DAILY;COUNT=3',
+  exDate: '20180628T063500Z,20180626T061500Z',
+}, {
+  title: 'Book Flights to San Fran for Sales Trip',
+  startDate: new Date(2021, 3, 25, 12, 11),
+  endDate: new Date(2021, 3, 25, 13, 0),
+  id: 101,
+  rRule: 'FREQ=DAILY;COUNT=4',
+  // exDate: '20180627T091100Z',
+  allDay: true,
+}]
+
 const CalendarView = () => {
   const dispatch = useAppDispatch()
   const [currentDate, setCurrentDate] = React.useState<SchedulerDateTime>(new Date());
   const events = useAppSelector(state => state.calendar.events)
 
   const commitChanges = ({added, changed, deleted}: ChangeSet) => {
-    console.log(added, changed, deleted)
     if (added) {
       const data = {
         title: added?.title,
         startDate: added?.startDate,
         endDate: added?.endDate,
-        type: added?.type
+        type: added?.type,
+        rRule: added?.rRule,
+        notes: added?.notes
       }
+      console.log(data)
       dispatch(addEvent(data)).then(() => window.location.reload())
     } else if (changed) {
       dispatch(updateEvent(changed)).then(() => window.location.reload())
@@ -57,7 +76,6 @@ const CalendarView = () => {
   React.useEffect(() => {
     dispatch(getAllEvents())
   }, [dispatch])
-
 
   return(
     <Paper>
