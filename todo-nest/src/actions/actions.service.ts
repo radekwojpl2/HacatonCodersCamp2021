@@ -36,11 +36,10 @@ async function sendMail(receiverEmail: string) {
       });
   
       const mailOptions = {
-        from: 'SENDER NAME <yours authorised email address@gmail.com>',
+        from: 'CollaborationPlatform <yours authorised email address@gmail.com>',
         to: receiverEmail,
-        subject: 'Hello from gmail using API',
-        text: 'Hello from gmail email using API',
-        html: '<h1>Hello from gmail email using API</h1>',
+        subject: 'Help requested!',
+        html: '<h1>Hello, someone requested a help from you!</h1><p>Please check it out on |link here|</p>',
       };
   
       const result = await transport.sendMail(mailOptions);
