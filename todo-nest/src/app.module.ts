@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { CalendarModule } from './calendar/calendar.module';
 import { TodoModule } from './todo/todo.module';
+import { ActionsModule } from './actions/actions.module';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
+    ActionsModule,
     TodoModule,
     CalendarModule,
     MongooseModule.forRoot(
