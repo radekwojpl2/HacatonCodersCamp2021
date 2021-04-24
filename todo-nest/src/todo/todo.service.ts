@@ -38,11 +38,18 @@ export default class TodoService {
     }
 
     async updateTodo(todoId: string, date: string, checked: boolean, value: string) {
+        //console.log(todoId, date, checked, value);
         try {
             const updatedTodo = await this.findTodo(todoId);
+            //console.log(" before updatedTodo.checked", updatedTodo.checked)
+
             if (date) updatedTodo.date = date;
-            if (checked) updatedTodo.checked = checked;
+            if (checked === false || checked === true){ 
+                //console.log("inside if: checked: ", checked, "updatedTodo.checked: ", updatedTodo.checked);
+                updatedTodo.checked = checked;
+            }
             if (value) updatedTodo.value = value;
+            //console.log("updatedTodo.checked", updatedTodo.checked)
             updatedTodo.save();
             return updatedTodo as Todo;
         } catch(err) {
