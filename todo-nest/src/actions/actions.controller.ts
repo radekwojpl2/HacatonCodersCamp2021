@@ -66,7 +66,7 @@ export default class ActionsController {
         return { id: newId }
     }
 
-    @Patch(':id')
+    @Post(':id')
     @ApiBody({
         schema: {
           type: 'object',
