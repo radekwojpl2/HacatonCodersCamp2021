@@ -39,7 +39,7 @@ async function sendMail(receiverEmail: string) {
         from: 'CollaborationPlatform <yours authorised email address@gmail.com>',
         to: receiverEmail,
         subject: 'Help requested!',
-        html: '<h1>Hello, someone requested a help from you!</h1><p>Please check it out on |link here|</p>',
+        html: `<h1>Hello, someone requested a help from you!</h1><p>Please check it out <a href="https://collaboration-platform-hackath.herokuapp.com/employees">here</a></p>`,
       };
   
       const result = await transport.sendMail(mailOptions);
