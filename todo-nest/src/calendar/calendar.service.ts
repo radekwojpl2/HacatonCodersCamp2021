@@ -11,8 +11,8 @@ export default class CalendarService {
     private readonly calendarEvent: Model<CalendarEvent>,
   ) {}
 
-  async addCalendarEvent(startDate: string, endDate: string, title: string, type: string) {
-      const newCalendarEvent = new this.calendarEvent({startDate, endDate, title, type})
+  async addCalendarEvent(startDate: string, endDate: string, title: string, type: string, rRule: string | undefined, notes: string | undefined) {
+      const newCalendarEvent = new this.calendarEvent({startDate, endDate, title, type, rRule, notes})
       const newCalendarEventResult = await newCalendarEvent.save();
       return newCalendarEventResult.id as string;
   }
@@ -24,7 +24,9 @@ export default class CalendarService {
           startDate: event.startDate,
           endDate: event.endDate,
           title: event.title,
-          type: event.type
+          type: event.type,
+          rRule: event.rRule,
+          notes: event.notes
       })) as CalendarEvent[]
   }
 
@@ -35,17 +37,21 @@ export default class CalendarService {
           startDate: singleCalendarEvent.startDate,
           endDate: singleCalendarEvent.endDate,
           title: singleCalendarEvent.title,
-          type: singleCalendarEvent.type
+          type: singleCalendarEvent.type,
+          rRule: singleCalendarEvent.rRule,
+          notes: singleCalendarEvent.notes
       }
   }
 
-  async updateCalendarEvent(calendarEventId: string, startDate: string, endDate: string, title: string, type: string) {
+  async updateCalendarEvent(calendarEventId: string, startDate: string, endDate: string, title: string, type: string, rRule: string, notes: string) {
       try {
           const updatedCalendarEvent = await this.findCalendarEvent(calendarEventId);
           if (startDate) updatedCalendarEvent.startDate = startDate;
           if (endDate) updatedCalendarEvent.endDate = endDate;
           if (title) updatedCalendarEvent.title = title;
           if (type) updatedCalendarEvent.type = type;
+          if (rRule) updatedCalendarEvent.rRule = rRule;
+          if (notes) updatedCalendarEvent.notes = notes;
           updatedCalendarEvent.save();
           return updatedCalendarEvent as CalendarEvent;
       } catch(err) {
