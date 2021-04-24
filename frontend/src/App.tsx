@@ -12,7 +12,7 @@ import ProjectsPage from './components/ProjectsPage/ProjectsPage';
 import Tasks from './components/Tasks/tasks';
 import Menu from './components/Navigation/menu';
 import Announcements from './components/Announcements/Announcements';
-import MentorGroupManagement from './components/groupManagement/mentorGroupManagement';
+import MentorGroupManagement from './components/Employees/employeesDashboard';
 import './App.css'
 
 function App() {
@@ -40,10 +40,7 @@ function App() {
               <Route exact path="/announcements">
             <Announcements/>
           </Route>
-              <Route path="/groupMentor">
-                <MentorGroupManagement />
-              </Route>
-              <Route path="/groupMentor">
+              <Route path="/employees">
                 <MentorGroupManagement />
               </Route>
             </Switch>
