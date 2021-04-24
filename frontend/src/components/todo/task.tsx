@@ -1,9 +1,13 @@
 import React, {useState} from "react";
-import {makeStyles, ListItem, Checkbox, TextField} from "@material-ui/core";
+import {makeStyles, ListItem, Checkbox, TextField } from "@material-ui/core";
 import { useAppDispatch } from "../../app/hooks";
-import { updateTodo } from "./todoPageSlice";
+import { deleteTodo, updateTodo } from "./todoPageSlice";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles=makeStyles({
+   cursor: {
+      cursor: "pointer"
+   }
 })
 
 export const Task=({taskValue, taskChecked, updateTask, taskDate, taskId}: {taskValue: string, taskChecked: boolean, taskDate: any, taskId?: string, updateTask?: (_task: any)=>void})=>{
@@ -37,6 +41,11 @@ export const Task=({taskValue, taskChecked, updateTask, taskDate, taskId}: {task
       setValue(e.target.value)
    }
 
+   const handleDelete = async (e: any) => {
+      const id = e.currentTarget.id
+      await dispatch(deleteTodo(id))
+      window.location.reload()
+   }
    return (
       <ListItem>
          <Checkbox checked={checked} onClick={handleChecked} id={taskId} />
@@ -45,6 +54,7 @@ export const Task=({taskValue, taskChecked, updateTask, taskDate, taskId}: {task
             disabled={checked}
             onChange={handleValue}
             id={taskId}/>
+         {!updateTask && <DeleteIcon className={classes.cursor} id={taskId} onClick={handleDelete}/>}
       </ListItem>
    );
 }

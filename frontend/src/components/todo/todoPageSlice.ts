@@ -63,6 +63,18 @@ export const updateTodo = createAsyncThunk(
     }
 )
 
+export const deleteTodo = createAsyncThunk(
+    'todos/updateTodo',
+    async (id: string) => {
+        try {
+            const deleted = await axios.delete('https://hackathon-nest.herokuapp.com/todo/' + id).then(res => res.data)
+            return deleted
+        } catch (err) {
+            return err.response.data
+        }
+    }
+)
+
 const ToDoPageSlice = createSlice({
     name: 'projects',
     initialState,
@@ -80,9 +92,6 @@ const ToDoPageSlice = createSlice({
             state.todos = action.payload
             state.loading = false;
             state.error = false
-        });
-        builder.addCase(addTodos.fulfilled, (state, action) => {
-            window.location.reload()
         });
       }
   })

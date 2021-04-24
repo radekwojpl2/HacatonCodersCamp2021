@@ -53,9 +53,10 @@ export const Todo = ({ setIsAddingTodo }: {setIsAddingTodo: Function}) => {
       // close function from props to close Dialog
    };
 
-   const handleSave = () => {
+   const handleSave = async () => {
       // save to backend
-      dispatch(addTodos(tasks))
+      await dispatch(addTodos(tasks))
+      window.location.reload()
 
       handleClose();
    };
