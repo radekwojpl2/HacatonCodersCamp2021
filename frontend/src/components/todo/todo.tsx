@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import {makeStyles, Dialog, ListItem, TextField, IconButton, Button} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import Task from "./task";
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { addTodos } from "./todoPageSlice";
 
 const useStyles = makeStyles({
    container: {
@@ -22,6 +24,7 @@ const useStyles = makeStyles({
 });
 
 export const Todo = ({ setIsAddingTodo }: {setIsAddingTodo: Function}) => {
+   const dispatch = useAppDispatch()
    const classes = useStyles();
    const [tasks, setTasks] = useState<any>([]);
    const [taskText, setTaskText] = useState("");
@@ -51,8 +54,8 @@ export const Todo = ({ setIsAddingTodo }: {setIsAddingTodo: Function}) => {
    };
 
    const handleSave = () => {
-      // save to backend //heroku
-      console.log(tasks);
+      // save to backend
+      dispatch(addTodos(tasks))
 
       handleClose();
    };
